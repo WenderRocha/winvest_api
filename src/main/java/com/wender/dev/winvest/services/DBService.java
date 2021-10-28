@@ -5,6 +5,7 @@ import com.wender.dev.winvest.entities.Wallet;
 import com.wender.dev.winvest.repositories.UserRepository;
 import com.wender.dev.winvest.repositories.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -46,4 +47,6 @@ public class DBService {
         walletRepository.saveAll(Arrays.asList(w1, w2));
 
     }
+
+
 }
