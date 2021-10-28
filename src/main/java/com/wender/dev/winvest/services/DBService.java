@@ -1,10 +1,13 @@
 package com.wender.dev.winvest.services;
 
 import com.wender.dev.winvest.entities.User;
+import com.wender.dev.winvest.entities.Wallet;
 import com.wender.dev.winvest.repositories.UserRepository;
+import com.wender.dev.winvest.repositories.WalletRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 @Service
@@ -12,6 +15,9 @@ public class DBService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private WalletRepository walletRepository;
 
     public void getInstanceDB() {
 
@@ -30,6 +36,14 @@ public class DBService {
                 "0g1xrlGfoa");
 
         userRepository.saveAll(Arrays.asList(u1, u2));
+
+        Wallet w1 = new Wallet(null,"Quotex", "");
+        Wallet w2 = new Wallet(null,"IQ Option", "");
+
+        w1.deposit(new BigDecimal("60.0"));
+        w2.deposit(new BigDecimal("100.0"));
+
+        walletRepository.saveAll(Arrays.asList(w1, w2));
 
     }
 }
