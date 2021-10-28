@@ -22,29 +22,27 @@ public class DBService {
 
     public void getInstanceDB() {
 
-        User u1 = new User(null,
+        User u1 = new User(
                 "Emanuel Tiago Martins",
                 "eemanueltiagomartins@fabianocosta.com.br",
                 "(48) 98324-8408",
                 "764.674.843-98",
                 "TxdxbMNRoj");
 
-        User u2 = new User(null,
+        User u2 = new User(
                 "Danilo Emanuel Benício Teixeira",
                 "daniloemanuel@piemme.com.br",
                 "(67) 99581-7479",
                 "789.173.703-73",
                 "0g1xrlGfoa");
 
-        userRepository.saveAll(Arrays.asList(u1, u2));
-
-        Wallet w1 = new Wallet(null,"Quotex", "");
-        Wallet w2 = new Wallet(null,"IQ Option", "");
-
+        Wallet w1 = new Wallet(null, "Quotex", "", u1);
         w1.deposit(new BigDecimal("60.0"));
-        w2.deposit(new BigDecimal("100.0"));
 
-        walletRepository.saveAll(Arrays.asList(w1, w2));
+
+        userRepository.saveAll(Arrays.asList(u1, u2));
+        walletRepository.saveAll(Arrays.asList(w1));
+
 
     }
 
