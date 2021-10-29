@@ -32,6 +32,7 @@ public class Wallet implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "wallet", fetch = FetchType.LAZY)
     private Management management;
 

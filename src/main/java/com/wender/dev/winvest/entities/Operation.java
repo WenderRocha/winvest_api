@@ -1,6 +1,7 @@
 package com.wender.dev.winvest.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wender.dev.winvest.entities.enums.ResultOperation;
 import lombok.*;
 
@@ -36,6 +37,7 @@ public class Operation implements Serializable {
     @Getter(AccessLevel.NONE)
     private Integer resultOperation;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "management_id")
     private Management management;
@@ -62,8 +64,7 @@ public class Operation implements Serializable {
     }
 
     public BigDecimal getOperationProfit() {
-
         BigDecimal percentual = this.payout.divide(new BigDecimal("100"));
-        return percentual;
+        return this.value.add(percentual.multiply(this.value)).setScale(2, RoundingMode.HALF_EVEN);
     }
 }
