@@ -1,5 +1,6 @@
 package com.wender.dev.winvest.resources;
 
+import com.wender.dev.winvest.dtos.UserDTO;
 import com.wender.dev.winvest.entities.User;
 import com.wender.dev.winvest.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class UserResource {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
-        User user = service.findById(id);
-        return ResponseEntity.ok().body(user);
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+        UserDTO objDTO = new UserDTO(service.findById(id));
+        return ResponseEntity.ok().body(objDTO);
     }
 }
