@@ -2,7 +2,7 @@ package com.wender.dev.winvest.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wender.dev.winvest.entities.enums.ResultOperation;
+import com.wender.dev.winvest.entities.enums.OperationResult;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,37 +35,52 @@ public class Operation implements Serializable {
 
     @Setter(AccessLevel.NONE)
     @Getter(AccessLevel.NONE)
-    private Integer resultOperation;
+    private Integer operationResult;
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "management_id")
     private Management management;
 
-
     public Operation(Long id, LocalDateTime date, String assets, String comments, BigDecimal payout,
-                     BigDecimal value, ResultOperation resultOperation, Management management) {
+                     BigDecimal value, OperationResult operationResult, Management management) {
         this.id = id;
         this.date = date;
         this.assets = assets;
         this.comments = comments;
         this.payout = payout;
         this.value = value;
-        this.take = getOperationProfit();
-        this.resultOperation = (resultOperation == null) ? 0 : resultOperation.getCode();
+        this.take = (operationResult.getCode() == 1) ? operationProfit() : BigDecimal.ZERO;
+        this.operationResult = (operationResult == null) ? 0 : operationResult.getCode();
         this.management = management;
     }
 
-    public ResultOperation getResultOperation() {
-        return ResultOperation.toEnum(this.resultOperation);
+    public OperationResult getOperationResult() {
+        return OperationResult.toEnum(this.operationResult);
     }
 
-    public void setResultOperation(ResultOperation resultOperation) {
-        this.resultOperation = resultOperation.getCode();
+    public void setOperationResult(OperationResult operationResult) {
+        this.operationResult = operationResult.getCode();
     }
 
-    public BigDecimal getOperationProfit() {
+    public BigDecimal operationProfit() {
         BigDecimal percentual = this.payout.divide(new BigDecimal("100"));
-        return percentual.multiply(this.value).setScale(2, RoundingMode.HALF_EVEN);
+        return percentual
+                .multiply(this.value)
+                .setScale(2, RoundingMode.HALF_EVEN);
+    }
+
+    public BigDecimal operationLoss() {
+        return this.value;
+    }
+
+    public BigDecimal getResult() {
+        if (getOperationResult() == OperationResult.WIN) {
+            return operationProfit();
+        } else if (getOperationResult() == OperationResult.LOSS) {
+            return operationLoss();
+        }
+
+        return BigDecimal.ZERO;
     }
 }

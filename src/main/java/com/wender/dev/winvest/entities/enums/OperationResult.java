@@ -5,20 +5,21 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum ResultOperation {
+public enum OperationResult {
     LOSS(0, "LOSS"),
-    WIN(1, "WIN");
+    WIN(1, "WIN"),
+    DRAW(2, "DRAW");
 
     private Integer code;
     private String description;
 
 
-    public static ResultOperation toEnum(Integer code){
+    public static OperationResult toEnum(Integer code){
         if(code == null){
             return null;
         }
 
-        for (ResultOperation x : ResultOperation.values()){
+        for (OperationResult x : OperationResult.values()){
             if(code.equals(x.getCode())){
                 return x;
             }
