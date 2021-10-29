@@ -35,6 +35,8 @@ public class Management implements Serializable {
 
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
+
+    @Transient
     private OperationResult operationResult;
 
     @Setter(AccessLevel.NONE)
