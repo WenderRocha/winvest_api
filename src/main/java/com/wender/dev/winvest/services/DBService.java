@@ -48,12 +48,12 @@ public class DBService {
                 "0g1xrlGfoa");
 
         Wallet w1 = new Wallet(null, "Quotex", "", u1);
-        w1.deposit(new BigDecimal("60.0"));
+        w1.deposit(new BigDecimal("200.0"));
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         walletRepository.saveAll(Arrays.asList(w1));
 
-        Management m1 = new Management(new BigDecimal("10"), w1);
+        Management m1 = new Management(new BigDecimal("15"), w1);
 
         Operation op1 = new Operation(null,
                 LocalDateTime.now(),
@@ -68,7 +68,7 @@ public class DBService {
                 "GBP/USD",
                 "testando nova estrategia",
                 new BigDecimal("87"),
-                new BigDecimal("100.0"),
+                new BigDecimal("20.0"),
                 ResultOperation.WIN,m1);
 
 

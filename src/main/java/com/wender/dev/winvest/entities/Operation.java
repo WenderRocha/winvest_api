@@ -51,6 +51,7 @@ public class Operation implements Serializable {
         this.comments = comments;
         this.payout = payout;
         this.value = value;
+        this.take = getOperationProfit();
         this.resultOperation = (resultOperation == null) ? 0 : resultOperation.getCode();
         this.management = management;
     }
@@ -65,6 +66,6 @@ public class Operation implements Serializable {
 
     public BigDecimal getOperationProfit() {
         BigDecimal percentual = this.payout.divide(new BigDecimal("100"));
-        return this.value.add(percentual.multiply(this.value)).setScale(2, RoundingMode.HALF_EVEN);
+        return percentual.multiply(this.value).setScale(2, RoundingMode.HALF_EVEN);
     }
 }
