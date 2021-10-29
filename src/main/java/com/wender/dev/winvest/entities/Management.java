@@ -35,7 +35,7 @@ public class Management implements Serializable {
     @OneToMany(mappedBy = "management")
     private Set<Operation> operations = new HashSet<>();
 
-    public BigDecimal totalProfit() {
+    public BigDecimal getTotalProfit() {
 
         BigDecimal sum = BigDecimal.ZERO;
 
