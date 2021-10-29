@@ -36,17 +36,21 @@ public class Operation implements Serializable {
     @Getter(AccessLevel.NONE)
     private Integer resultOperation;
 
+    @ManyToOne
+    @JoinColumn(name = "management_id")
+    private Management management;
+
 
     public Operation(Long id, LocalDateTime date, String assets, String comments, BigDecimal payout,
-                     BigDecimal value, BigDecimal take, ResultOperation resultOperation) {
+                     BigDecimal value, ResultOperation resultOperation, Management management) {
         this.id = id;
         this.date = date;
         this.assets = assets;
         this.comments = comments;
         this.payout = payout;
         this.value = value;
-        this.take = take;
         this.resultOperation = (resultOperation == null) ? 0 : resultOperation.getCode();
+        this.management = management;
     }
 
     public ResultOperation getResultOperation() {
@@ -57,7 +61,9 @@ public class Operation implements Serializable {
         this.resultOperation = resultOperation.getCode();
     }
 
-    public BigDecimal operationProfit() {
-        return value.add(payout.divide(new BigDecimal("100")).setScale(2, RoundingMode.HALF_EVEN));
+    public BigDecimal getOperationProfit() {
+
+        BigDecimal percentual = this.payout.divide(new BigDecimal("100"));
+        return percentual;
     }
 }

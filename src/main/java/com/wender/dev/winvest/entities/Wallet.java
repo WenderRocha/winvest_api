@@ -32,6 +32,9 @@ public class Wallet implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne(mappedBy = "wallet", fetch = FetchType.LAZY)
+    private Management management;
+
     public Wallet(Long id, String name, String imgUrl, User user) {
         this.id = id;
         this.name = name;

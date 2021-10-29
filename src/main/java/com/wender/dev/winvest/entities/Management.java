@@ -6,9 +6,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.HashSet;
+import java.util.Set;
 
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -20,13 +22,28 @@ public class Management implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NonNull
     private BigDecimal target;
 
+    @NonNull
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wallet_id")
     private Wallet wallet;
-    private Operation operation;
+
+    @Setter(AccessLevel.NONE)
+    @OneToMany(mappedBy = "management")
+    private Set<Operation> operations = new HashSet<>();
 
     public BigDecimal totalProfit() {
-        return wallet.getBalance().add(operation.getTake());
+
+        BigDecimal sum = BigDecimal.ZERO;
+
+        for (Operation x :operations) {
+            sum = wallet.getBalance().add(x.getTake());
+        }
+
+        return sum;
     }
 
     public BigDecimal profitTake() {

@@ -42,8 +42,7 @@ public class User implements Serializable {
     @NonNull
     private String password;
 
-
     @Setter(AccessLevel.NONE)
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Wallet> wallets = new ArrayList<>();
 }
