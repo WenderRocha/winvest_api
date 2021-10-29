@@ -1,7 +1,7 @@
 package com.wender.dev.winvest.services;
 
 import com.wender.dev.winvest.entities.Management;
-import com.wender.dev.winvest.resources.ManagementRepository;
+import com.wender.dev.winvest.repositories.ManagementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
