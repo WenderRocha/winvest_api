@@ -61,7 +61,7 @@ public class Management implements Serializable {
             }
         }
 
-        return sum;
+        return sum.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public BigDecimal getProfitTarget() {
@@ -73,9 +73,9 @@ public class Management implements Serializable {
 
     public BigDecimal getProfitPercentage() {
         return getBalance()
-                .divide(wallet.getBalance())
-                .subtract(new BigDecimal("1"))
-                .multiply(new BigDecimal("100"))
-                .setScale(2, RoundingMode.HALF_EVEN);
+                .divide(wallet.getBalance(), 3, RoundingMode.HALF_EVEN)
+                .subtract(new BigDecimal("1.0"))
+                .multiply(new BigDecimal("100"));
+
     }
 }

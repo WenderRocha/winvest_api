@@ -33,6 +33,42 @@ public class DBService {
 
     public void getInstanceDB() {
 
+
+    /* DEV Data
+        User u1 = new User(
+                "Wender Rocha",
+                "wender_dev@hotmail.com",
+                "(19) 999810604",
+                "46419220807",
+                "12345678"
+        );
+
+        Wallet w1 = new Wallet(null, "Quotex", "", u1);
+        w1.deposit(new BigDecimal("157.24"));
+
+        userRepository.saveAll(Arrays.asList(u1));
+        walletRepository.saveAll(Arrays.asList(w1));
+
+        Management m1 = new Management(new BigDecimal("5"), w1);
+
+
+        Operation op1 = new Operation(null,
+                LocalDateTime.now(),
+                "EUR/AUD",
+                "Retração em M5",
+                new BigDecimal("78"),
+                new BigDecimal("60.0"),
+                OperationResult.WIN, m1
+        );
+
+        managementRepository.saveAll(Arrays.asList(m1));
+        operationRepository.saveAll(Arrays.asList(op1));
+
+
+        m1.getOperations().add(op1);
+        managementRepository.saveAll(Arrays.asList(m1));*/
+
+        //Test Data
         User u1 = new User(
                 "Emanuel Tiago Martins",
                 "eemanueltiagomartins@fabianocosta.com.br",
@@ -47,11 +83,15 @@ public class DBService {
                 "789.173.703-73",
                 "0g1xrlGfoa");
 
+
+
         Wallet w1 = new Wallet(null, "Quotex", "", u1);
         w1.deposit(new BigDecimal("200.0"));
 
         Wallet w2 = new Wallet(null, "IQ Option", "", u1);
         w2.deposit(new BigDecimal("100.0"));
+
+
 
         userRepository.saveAll(Arrays.asList(u1, u2));
         walletRepository.saveAll(Arrays.asList(w1,w2));
