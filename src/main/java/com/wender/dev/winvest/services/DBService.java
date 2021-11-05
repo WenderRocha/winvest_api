@@ -69,7 +69,7 @@ public class DBService {
         managementRepository.saveAll(Arrays.asList(m1));*/
 
         //Test Data
-
+/*
         User u1 = new User(
                 "Emanuel Tiago Martins",
                 "eemanueltiagomartins@fabianocosta.com.br",
@@ -146,7 +146,7 @@ public class DBService {
         m1.getOperations().add(op2);
 
         managementRepository.saveAll(Arrays.asList(m1));
-
+*/
 
     }
 

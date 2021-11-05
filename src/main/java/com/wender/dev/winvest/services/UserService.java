@@ -1,5 +1,6 @@
 package com.wender.dev.winvest.services;
 
+import com.wender.dev.winvest.dtos.UserDTO;
 import com.wender.dev.winvest.entities.User;
 import com.wender.dev.winvest.repositories.UserRepository;
 import com.wender.dev.winvest.services.exceptions.DataIntegratyViolationException;
@@ -25,28 +26,54 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User create(@Valid User obj){
-        if(findByCPF(obj) != null){
+    public User create(@Valid UserDTO objDTO){
+        if(findByCPF(objDTO) != null){
             throw new DataIntegratyViolationException("CPF já cadastrado na base de dados!");
         }
 
-        if(findByEMAIL(obj) != null){
+        if(findByEMAIL(objDTO) != null){
             throw new DataIntegratyViolationException("E-mail já cadastrado na base de dados!");
         }
 
+        if(findByPHONE(objDTO) != null){
+            throw new DataIntegratyViolationException("Telefone já cadastrado na base de dados!");
+        }
+
         return repository.save(
-            new User(
-                obj.getName(),
-                obj.getEmail(),
-                obj.getPhone(),
-                obj.getCpf(),
-                obj.getPassword()
-            )
+                new User(objDTO.getName(),
+                objDTO.getEmail(),
+                objDTO.getPhone(),
+                objDTO.getCpf(),
+                objDTO.getPassword())
         );
     }
 
-    private User findByCPF(User obj){
-        User user = repository.findByCPF(obj.getCpf());
+    public User update(Long id, @Valid UserDTO objDTO) {
+        User oldObj = findById(id);
+
+        if(findByCPF(objDTO) != null && findByCPF(objDTO).getId() != id){
+            throw new DataIntegratyViolationException("CPF já cadastrado na base de dados!");
+        }
+
+        if(findByEMAIL(objDTO) != null && findByEMAIL(objDTO).getId() != id){
+            throw new DataIntegratyViolationException("E-mail já cadastrado na base de dados!");
+        }
+
+        if(findByPHONE(objDTO) != null && findByPHONE(objDTO).getId() != id){
+            throw new DataIntegratyViolationException("Telefone já cadastrado na base de dados!");
+        }
+
+        oldObj.setName(objDTO.getName());
+        oldObj.setEmail(objDTO.getEmail());
+        oldObj.setCpf(objDTO.getCpf());
+        oldObj.setPhone(objDTO.getPhone());
+        oldObj.setPassword(objDTO.getPassword());
+        return repository.save(oldObj);
+
+    }
+
+    private User findByCPF(UserDTO objDTO){
+        User user = repository.findByCPF(objDTO.getCpf());
 
         if(user != null){
             return user;
@@ -55,8 +82,8 @@ public class UserService {
         return null;
     }
 
-    private User findByEMAIL(User obj){
-        User user = repository.findByEMAIL(obj.getEmail());
+    private User findByEMAIL(UserDTO objDTO){
+        User user = repository.findByEMAIL(objDTO.getEmail());
 
         if(user != null){
             return user;
@@ -65,5 +92,13 @@ public class UserService {
         return null;
     }
 
+    private User findByPHONE(UserDTO objDTO){
+        User user = repository.findByPhone(objDTO.getPhone());
+        if(user != null){
+            return user;
+        }
+
+        return null;
+    }
 
 }

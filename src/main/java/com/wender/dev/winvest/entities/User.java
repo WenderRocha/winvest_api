@@ -19,6 +19,7 @@ import java.util.List;
 @Table(name = "tb_user")
 public class User implements Serializable {
 
+
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +35,7 @@ public class User implements Serializable {
     @NotEmpty(message = "O campo email é requerido")
     private String email;
 
+    @Column(unique = true)
     @NonNull
     @NotEmpty(message = "O campo telefone é requerido.")
     private String phone;

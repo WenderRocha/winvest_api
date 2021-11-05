@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -18,12 +19,25 @@ public class OperationDTO implements Serializable {
     private Long id;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime date;
+
+    @NotNull(message = "O campo ativo é requerido.")
     private String assets;
+
+    @NotNull(message = "O campo observação é requerido.")
     private String comments;
+
+    @NotNull(message = "O campo payout é requerido.")
     private BigDecimal payout;
+
+    @NotNull(message = "O campo valor é requerido.")
     private BigDecimal value;
+
     private BigDecimal take;
+
+    @NotNull(message = "O campo resultado é requerido.")
     private Integer operationResult;
+
+    @NotNull(message = "O campo carteira é requerido.")
     private Long management;
 
     public OperationDTO(Operation obj) {

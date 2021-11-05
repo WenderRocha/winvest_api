@@ -38,8 +38,8 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@Valid @RequestBody User obj){
-        User newObj = service.create(obj);
+    public ResponseEntity<UserDTO> create(@Valid @RequestBody UserDTO objDTO){
+        User newObj = service.create(objDTO);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
@@ -48,5 +48,11 @@ public class UserResource {
                 .toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO objDTO){
+        UserDTO newObj = new UserDTO(service.update(id, objDTO));
+        return ResponseEntity.ok().body(newObj);
     }
 }
