@@ -1,6 +1,7 @@
 package com.wender.dev.winvest.dtos;
 
 import com.wender.dev.winvest.entities.User;
+import com.wender.dev.winvest.entities.Wallet;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

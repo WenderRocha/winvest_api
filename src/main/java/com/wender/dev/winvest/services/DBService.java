@@ -84,12 +84,10 @@ public class DBService {
                 "0g1xrlGfoa");
 
 
+        Wallet w1 = new Wallet(null, "Quotex",new BigDecimal("200.0"), "", u1);
 
-        Wallet w1 = new Wallet(null, "Quotex", "", u1);
-        w1.deposit(new BigDecimal("200.0"));
+        Wallet w2 = new Wallet(null, "IQ Option", new BigDecimal("100.0"), "", u1);
 
-        Wallet w2 = new Wallet(null, "IQ Option", "", u1);
-        w2.deposit(new BigDecimal("100.0"));
 
 
 

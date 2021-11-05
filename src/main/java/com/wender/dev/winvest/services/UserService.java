@@ -25,7 +25,6 @@ public class UserService {
     }
 
     public User create(User obj){
-
         if(findByCPF(obj) != null){
             throw new DataIntegratyViolationException("CPF já cadastrado na base de dados!");
         }
@@ -33,11 +32,21 @@ public class UserService {
         if(findByEMAIL(obj) != null){
             throw new DataIntegratyViolationException("E-mail já cadastrado na base de dados!");
         }
-        return repository.save(new User(obj.getName(), obj.getEmail(), obj.getPhone(), obj.getCpf(), obj.getPassword())) ;
+
+        return repository.save(
+            new User(
+                obj.getName(),
+                obj.getEmail(),
+                obj.getPhone(),
+                obj.getCpf(),
+                obj.getPassword()
+            )
+        );
     }
 
     private User findByCPF(User obj){
         User user = repository.findByCPF(obj.getCpf());
+
         if(user != null){
             return user;
         }
@@ -54,5 +63,6 @@ public class UserService {
 
         return null;
     }
+
 
 }

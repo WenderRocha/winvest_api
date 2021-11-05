@@ -22,7 +22,6 @@ public class Wallet implements Serializable {
 
     private String name;
 
-    @Setter(AccessLevel.NONE)
     private BigDecimal balance;
 
     private String imgUrl;
@@ -32,10 +31,10 @@ public class Wallet implements Serializable {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Wallet(Long id, String name, String imgUrl, User user) {
+    public Wallet(Long id, String name, BigDecimal amount, String imgUrl, User user) {
         this.id = id;
         this.name = name;
-        this.balance = BigDecimal.ZERO;
+        this.balance = amount;
         this.imgUrl = imgUrl;
         this.user = user;
     }
