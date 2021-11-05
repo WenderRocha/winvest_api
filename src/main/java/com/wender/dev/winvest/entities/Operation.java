@@ -31,6 +31,9 @@ public class Operation implements Serializable {
     private String comments;
     private BigDecimal payout;
     private BigDecimal value;
+
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private BigDecimal take;
 
     @Setter(AccessLevel.NONE)
@@ -50,7 +53,6 @@ public class Operation implements Serializable {
         this.comments = comments;
         this.payout = payout;
         this.value = value;
-        this.take = (operationResult.getCode() == 1) ? operationProfit() : BigDecimal.ZERO;
         this.operationResult = (operationResult == null) ? 0 : operationResult.getCode();
         this.management = management;
     }
@@ -63,24 +65,32 @@ public class Operation implements Serializable {
         this.operationResult = operationResult.getCode();
     }
 
-    public BigDecimal operationProfit() {
+    public BigDecimal getOperationProfit() {
         BigDecimal percentual = this.payout.divide(new BigDecimal("100"));
         return percentual
                 .multiply(this.value)
                 .setScale(2, RoundingMode.HALF_EVEN);
     }
 
-    public BigDecimal operationLoss() {
+    public BigDecimal getOperationLoss() {
         return this.value;
     }
 
     public BigDecimal getResult() {
         if (getOperationResult() == OperationResult.WIN) {
-            return operationProfit();
+            return getOperationProfit();
         } else if (getOperationResult() == OperationResult.LOSS) {
-            return operationLoss();
+            return getOperationLoss();
         }
 
         return BigDecimal.ZERO;
+    }
+
+    public BigDecimal getTake(){
+      return this.take;
+    }
+
+    public BigDecimal setTake(OperationResult operationResult){
+       return this.take = (operationResult.getCode() == 1) ? getOperationProfit() : BigDecimal.ZERO;
     }
 }

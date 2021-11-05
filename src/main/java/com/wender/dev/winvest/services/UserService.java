@@ -7,6 +7,7 @@ import com.wender.dev.winvest.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +25,7 @@ public class UserService {
         return repository.findAll();
     }
 
-    public User create(User obj){
+    public User create(@Valid User obj){
         if(findByCPF(obj) != null){
             throw new DataIntegratyViolationException("CPF já cadastrado na base de dados!");
         }

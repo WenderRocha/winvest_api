@@ -69,6 +69,7 @@ public class DBService {
         managementRepository.saveAll(Arrays.asList(m1));*/
 
         //Test Data
+
         User u1 = new User(
                 "Emanuel Tiago Martins",
                 "eemanueltiagomartins@fabianocosta.com.br",
@@ -94,8 +95,8 @@ public class DBService {
         userRepository.saveAll(Arrays.asList(u1, u2));
         walletRepository.saveAll(Arrays.asList(w1,w2));
 
-        Management m1 = new Management(new BigDecimal("15"), w1);
-        Management m2 = new Management(new BigDecimal("10"), w2);
+        Management m1 = new Management(new BigDecimal("15"), new BigDecimal("5"), w1);
+        Management m2 = new Management(new BigDecimal("10"), new BigDecimal("5"), w2);
 
         Operation op1 = new Operation(null,
                 LocalDateTime.now(),
@@ -145,6 +146,7 @@ public class DBService {
         m1.getOperations().add(op2);
 
         managementRepository.saveAll(Arrays.asList(m1));
+
 
     }
 

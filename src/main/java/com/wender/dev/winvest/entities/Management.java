@@ -1,10 +1,10 @@
 package com.wender.dev.winvest.entities;
 
-
 import com.wender.dev.winvest.entities.enums.OperationResult;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -25,9 +25,16 @@ public class Management implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "O campo stop gain é requerido.")
     @NonNull
     private BigDecimal target;
 
+    @NotNull(message = "O campo stop loss é requerido.")
+    @NonNull
+    private BigDecimal stop;
+
+
+    @NotNull(message = "O campo carteira é requerido.")
     @NonNull
     @OneToOne
     @JoinColumn(name = "wallet_id")
@@ -55,9 +62,9 @@ public class Management implements Serializable {
         for (Operation x : operations) {
 
             if (x.getOperationResult() == operationResult.LOSS) {
-                sum = sum.subtract(x.operationLoss());
+                sum = sum.subtract(x.getOperationLoss());
             } else if (x.getOperationResult() == operationResult.WIN) {
-                sum = sum.add(x.operationProfit());
+                sum = sum.add(x.getOperationProfit());
             }
         }
 
