@@ -72,6 +72,15 @@ public class UserService {
 
     }
 
+    public void delete(Long id) {
+        User obj = findById(id);
+
+        if(obj.getWallets().size() > 0){
+            throw new DataIntegratyViolationException("Usuário possui carteira(s), não pode ser deletado!");
+        }
+        repository.deleteById(id);
+    }
+
     private User findByCPF(UserDTO objDTO){
         User user = repository.findByCPF(objDTO.getCpf());
 
@@ -100,5 +109,6 @@ public class UserService {
 
         return null;
     }
+
 
 }
