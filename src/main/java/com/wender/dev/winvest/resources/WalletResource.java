@@ -44,4 +44,10 @@ public class WalletResource {
 
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<WalletDTO> update(@PathVariable Long id, @Valid @RequestBody WalletDTO objDTO){
+        WalletDTO newObj = new WalletDTO(service.update(id, objDTO));
+        return ResponseEntity.ok().body(newObj);
+    }
 }

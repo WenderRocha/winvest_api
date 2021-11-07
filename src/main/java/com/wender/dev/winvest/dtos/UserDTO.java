@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.Column;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -27,6 +28,7 @@ public class UserDTO implements Serializable {
     private String phone;
 
     @NotNull(message = "O campo cpf é requerido.")
+    @Column(unique = true)
     private String cpf;
 
     @NotNull(message = "O campo senha é requerido.")

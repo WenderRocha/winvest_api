@@ -18,7 +18,6 @@ public class WalletService {
     @Autowired
     private WalletRepository repository;
 
-
     @Autowired
     private UserService userService;
 
@@ -48,4 +47,13 @@ public class WalletService {
         return repository.save(newObj);
     }
 
+    public Wallet update(Long id, @Valid WalletDTO objDTO) {
+
+        Wallet oldObj = findById(id);
+        oldObj.setName(objDTO.getName());
+        oldObj.setBalance(objDTO.getBalance());
+        oldObj.setImgUrl(objDTO.getImgUrl());
+
+        return repository.save(oldObj);
+    }
 }

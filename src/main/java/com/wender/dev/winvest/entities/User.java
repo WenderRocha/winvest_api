@@ -44,6 +44,7 @@ public class User implements Serializable {
     @CPF
     @NonNull
     @NotEmpty(message = "O campo CPF é requerido.")
+    @Column(unique = true)
     private String cpf;
 
     @NonNull
