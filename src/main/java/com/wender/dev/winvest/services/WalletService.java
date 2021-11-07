@@ -4,6 +4,7 @@ import com.wender.dev.winvest.dtos.WalletDTO;
 import com.wender.dev.winvest.entities.User;
 import com.wender.dev.winvest.entities.Wallet;
 import com.wender.dev.winvest.repositories.WalletRepository;
+import com.wender.dev.winvest.services.exceptions.DataIntegratyViolationException;
 import com.wender.dev.winvest.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,9 @@ public class WalletService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private ManagementService managementService;
 
     public Wallet findById(Long id){
         Optional<Wallet> obj = repository.findById(id);
@@ -53,7 +57,18 @@ public class WalletService {
         oldObj.setName(objDTO.getName());
         oldObj.setBalance(objDTO.getBalance());
         oldObj.setImgUrl(objDTO.getImgUrl());
-
         return repository.save(oldObj);
+    }
+
+    public void delete(Long id) {
+
+       Wallet wallet = findById(id);
+
+        if(managementService.findByWallet(wallet)){
+            throw new DataIntegratyViolationException("Carteira está sendo gerênciada, não pode ser deletada.");
+        }
+
+        //deleta a carteira.
+        repository.deleteById(id);
     }
 }

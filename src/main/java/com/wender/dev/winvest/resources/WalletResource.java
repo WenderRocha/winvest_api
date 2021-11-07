@@ -50,4 +50,10 @@ public class WalletResource {
         WalletDTO newObj = new WalletDTO(service.update(id, objDTO));
         return ResponseEntity.ok().body(newObj);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
