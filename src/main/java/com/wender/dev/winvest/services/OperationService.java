@@ -66,7 +66,7 @@ public class OperationService {
     }
 
     public void delete(Long id) {
-        repository.findById(id);
+        Operation obj = findById(id);
         repository.deleteById(id);
     }
 
