@@ -41,6 +41,17 @@ public class ManagementResource {
                 .buildAndExpand(obj.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
+    }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ManagementDTO> update(@PathVariable Long id, @Valid @RequestBody ManagementDTO objDTO){
+        ManagementDTO newObj = new ManagementDTO(service.update(id, objDTO));
+        return ResponseEntity.ok().body(newObj);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

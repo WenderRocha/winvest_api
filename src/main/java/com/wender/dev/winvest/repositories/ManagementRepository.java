@@ -9,6 +9,4 @@ import org.springframework.data.repository.query.Param;
 
 public interface ManagementRepository extends JpaRepository<Management, Long> {
 
-    @Query("SELECT obj FROM Management obj WHERE obj.wallet =:wallet")
-    Management findByWALLET(@Param("wallet")Long id);
 }

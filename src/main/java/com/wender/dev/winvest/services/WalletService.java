@@ -52,7 +52,6 @@ public class WalletService {
     }
 
     public Wallet update(Long id, @Valid WalletDTO objDTO) {
-
         Wallet oldObj = findById(id);
         oldObj.setName(objDTO.getName());
         oldObj.setBalance(objDTO.getBalance());
@@ -61,14 +60,12 @@ public class WalletService {
     }
 
     public void delete(Long id) {
-
        Wallet wallet = findById(id);
 
         if(managementService.findByWallet(wallet)){
             throw new DataIntegratyViolationException("Carteira está sendo gerênciada, não pode ser deletada.");
         }
 
-        //deleta a carteira.
         repository.deleteById(id);
     }
 }
