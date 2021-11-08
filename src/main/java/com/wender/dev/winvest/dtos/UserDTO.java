@@ -40,6 +40,5 @@ public class UserDTO implements Serializable {
         this.name = obj.getName();
         this.phone = obj.getPhone();
         this.email = obj.getEmail();
-        this.password = obj.getPassword();
     }
 }
