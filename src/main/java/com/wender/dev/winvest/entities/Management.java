@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -84,5 +86,41 @@ public class Management implements Serializable {
                 .subtract(new BigDecimal("1.0"))
                 .multiply(new BigDecimal("100"));
 
+    }
+
+    public BigDecimal getWinToday(){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        BigDecimal sum = BigDecimal.ZERO;
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Operation x : operations) {
+            if( x.getOperationResult() == OperationResult.WIN && x.getDate().format(formatter).equals(now.format(formatter))){
+                sum = sum.add(x.getOperationProfit());
+            }
+        }
+        return sum.setScale(2, RoundingMode.HALF_EVEN);
+
+    }
+
+    public BigDecimal getLossToday(){
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        BigDecimal sum = BigDecimal.ZERO;
+        LocalDateTime now = LocalDateTime.now();
+
+        for (Operation x : operations) {
+            if( x.getOperationResult() == OperationResult.LOSS && x.getDate().format(formatter).equals(now.format(formatter))){
+                sum = sum.add(x.getOperationProfit());
+            }
+        }
+        return sum.setScale(2, RoundingMode.HALF_EVEN);
+
+    }
+
+    public BigDecimal getProfitToday() {
+       return getWinToday().subtract(getLossToday()).setScale(2, RoundingMode.HALF_EVEN);
     }
 }
