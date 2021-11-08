@@ -53,4 +53,22 @@ public class OperationService {
 
         return repository.save(newObj);
     }
+
+    public Operation update(Long id, @Valid OperationDTO objDTO) {
+
+        Operation oldObj = findById(id);
+        oldObj.setAssets(objDTO.getAssets());
+        oldObj.setComments(objDTO.getComments());
+        oldObj.setPayout(objDTO.getPayout());
+        oldObj.setValue(objDTO.getValue());
+        oldObj.setOperationResult(OperationResult.toEnum(objDTO.getOperationResult()));
+        return repository.save(oldObj);
+    }
+
+    public void delete(Long id) {
+        repository.findById(id);
+        repository.deleteById(id);
+    }
+
+
 }

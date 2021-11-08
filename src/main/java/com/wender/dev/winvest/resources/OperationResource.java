@@ -32,13 +32,25 @@ public class OperationResource {
     }
 
     @PostMapping
-    public ResponseEntity<Operation> create(@Valid  @RequestBody OperationDTO obj){
-        obj = new OperationDTO(service.create(obj));
+    public ResponseEntity<Operation> create(@Valid  @RequestBody OperationDTO objDTO){
+        objDTO = new OperationDTO(service.create(objDTO));
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(obj.getId()).toUri();
+                .buildAndExpand(objDTO.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<OperationDTO> update(@PathVariable Long id, @Valid @RequestBody OperationDTO objDTO){
+        OperationDTO newObj = new OperationDTO(service.update(id, objDTO));
+        return ResponseEntity.ok().body(newObj);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
