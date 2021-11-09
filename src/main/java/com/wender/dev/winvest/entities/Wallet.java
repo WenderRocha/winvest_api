@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -20,12 +22,15 @@ public class Wallet implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "O campo nome é requerido.")
     private String name;
 
+    @NotNull(message = "O campo saldo é requerido.")
     private BigDecimal balance;
 
     private String imgUrl;
 
+    @NotNull(message = "O campo usuário é requerido.")
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -37,13 +42,5 @@ public class Wallet implements Serializable {
         this.balance = amount;
         this.imgUrl = imgUrl;
         this.user = user;
-    }
-
-    public void deposit(BigDecimal amount) {
-        this.balance = this.balance.add(amount);
-    }
-
-    public void withdraw(BigDecimal amount) {
-        this.balance = this.balance.subtract(amount);
     }
 }

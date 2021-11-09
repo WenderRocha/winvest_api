@@ -16,45 +16,22 @@ import java.util.Optional;
 public class ManagementService {
 
     @Autowired
-    private ManagementRepository repository;
-
-    @Autowired
     private WalletService walletService;
 
-    public Management findById(Long id){
+    @Autowired
+    private ManagementRepository repository;
+
+    public Management findById(Long id) {
         Optional<Management> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! id: " + id));
     }
 
-    public List<Management> findAll(){
+    public List<Management> findAll() {
         return repository.findAll();
     }
 
-    public Management create(@Valid ManagementDTO obj){
+    public Management create(@Valid ManagementDTO obj) {
         return fromDTO(obj);
-    }
-
-    private Management fromDTO(ManagementDTO obj){
-        Management newObj = new Management();
-        newObj.setId(obj.getId());
-        newObj.setTarget(obj.getTarget());
-        newObj.setStop(obj.getStop());
-
-        Wallet wallet = walletService.findById(obj.getWallet());
-        newObj.setWallet(wallet);
-
-        return repository.save(newObj);
-    }
-
-    public Boolean findByWallet(Wallet obj){
-        for (Management management : findAll()){
-            if(obj.getId().equals(management.getWallet().getId())){
-                return true;
-            }
-        }
-
-        return false;
-
     }
 
     public Management update(Long id, @Valid ManagementDTO obj) {
@@ -67,5 +44,28 @@ public class ManagementService {
     public void delete(Long id) {
         Management obj = findById(id);
         repository.deleteById(id);
+    }
+
+    private Management fromDTO(ManagementDTO obj) {
+        Management newObj = new Management();
+        newObj.setId(obj.getId());
+        newObj.setTarget(obj.getTarget());
+        newObj.setStop(obj.getStop());
+
+        Wallet wallet = walletService.findById(obj.getWallet());
+        newObj.setWallet(wallet);
+
+        return repository.save(newObj);
+    }
+
+    public Boolean findByWallet(Wallet obj) {
+        for (Management management : findAll()) {
+            if (obj.getId().equals(management.getWallet().getId())) {
+                return true;
+            }
+        }
+
+        return false;
+
     }
 }

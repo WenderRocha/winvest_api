@@ -1,5 +1,6 @@
 package com.wender.dev.winvest.dtos;
 import com.wender.dev.winvest.entities.Wallet;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,8 +13,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class WalletDTO implements Serializable {
 
+    @EqualsAndHashCode.Include
     private Long id;
 
     @NotEmpty(message = "O campo nome é requerido.")

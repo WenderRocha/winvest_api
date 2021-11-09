@@ -17,39 +17,27 @@ import java.util.Optional;
 public class WalletService {
 
     @Autowired
-    private WalletRepository repository;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    private WalletRepository repository;
 
     @Autowired
     private ManagementService managementService;
 
-    public Wallet findById(Long id){
+    public Wallet findById(Long id) {
         Optional<Wallet> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! id: " + id));
     }
 
-    public List<Wallet> findAll(){
+    public List<Wallet> findAll() {
         return repository.findAll();
     }
 
-    public Wallet create(@Valid WalletDTO obj){
+    public Wallet create(@Valid WalletDTO obj) {
         return fromDTO(obj);
     }
 
-    private Wallet fromDTO(WalletDTO obj){
-        Wallet newObj = new Wallet();
-        newObj.setId(obj.getId());
-        newObj.setName(obj.getName());
-        newObj.setBalance(obj.getBalance());
-        newObj.setImgUrl(obj.getImgUrl());
-
-        User user = userService.findById(obj.getUser());
-        newObj.setUser(user);
-
-        return repository.save(newObj);
-    }
 
     public Wallet update(Long id, @Valid WalletDTO objDTO) {
         Wallet oldObj = findById(id);
@@ -60,12 +48,25 @@ public class WalletService {
     }
 
     public void delete(Long id) {
-       Wallet wallet = findById(id);
+        Wallet wallet = findById(id);
 
-        if(managementService.findByWallet(wallet)){
+        if (managementService.findByWallet(wallet)) {
             throw new DataIntegratyViolationException("Carteira está sendo gerênciada, não pode ser deletada.");
         }
 
         repository.deleteById(id);
+    }
+
+    private Wallet fromDTO(WalletDTO obj) {
+        Wallet newObj = new Wallet();
+        newObj.setId(obj.getId());
+        newObj.setName(obj.getName());
+        newObj.setBalance(obj.getBalance());
+        newObj.setImgUrl(obj.getImgUrl());
+
+        User user = userService.findById(obj.getUser());
+        newObj.setUser(user);
+
+        return repository.save(newObj);
     }
 }

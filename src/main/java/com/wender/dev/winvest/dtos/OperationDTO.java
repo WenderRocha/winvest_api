@@ -2,6 +2,7 @@ package com.wender.dev.winvest.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wender.dev.winvest.entities.Operation;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,9 +15,12 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class OperationDTO implements Serializable {
 
+    @EqualsAndHashCode.Include
     private Long id;
+
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime date;
 

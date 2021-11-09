@@ -35,7 +35,6 @@ public class Management implements Serializable {
     @NonNull
     private BigDecimal stop;
 
-
     @NotNull(message = "O campo carteira é requerido.")
     @NonNull
     @OneToOne
@@ -113,7 +112,7 @@ public class Management implements Serializable {
 
         for (Operation x : operations) {
             if( x.getOperationResult() == OperationResult.LOSS && x.getDate().format(formatter).equals(now.format(formatter))){
-                sum = sum.add(x.getOperationProfit());
+                sum = sum.add(x.getOperationLoss());
             }
         }
         return sum.setScale(2, RoundingMode.HALF_EVEN);

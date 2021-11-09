@@ -2,6 +2,7 @@ package com.wender.dev.winvest.dtos;
 
 import com.wender.dev.winvest.entities.User;
 import com.wender.dev.winvest.entities.Wallet;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,8 +15,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
+@EqualsAndHashCode
 public class UserDTO implements Serializable {
 
+    @EqualsAndHashCode.Include
     private Long id;
 
     @NotNull(message = "O campo nome é requerido.")
@@ -33,7 +36,6 @@ public class UserDTO implements Serializable {
 
     @NotNull(message = "O campo senha é requerido.")
     private String password;
-
 
     public UserDTO(User obj) {
         this.id = obj.getId();

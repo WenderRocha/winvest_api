@@ -20,7 +20,7 @@ public class DevConfig {
     @Bean
     public Boolean instaceDB() {
 
-        if(ddl.equals("update")){
+        if (ddl.equals("update")) {
             this.dbservice.getInstanceDB();
         }
 
