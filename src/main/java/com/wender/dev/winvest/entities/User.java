@@ -1,5 +1,6 @@
 package com.wender.dev.winvest.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
 
@@ -45,6 +46,7 @@ public class User implements Serializable {
     @Column(unique = true)
     private String cpf;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NonNull
     @NotEmpty(message = "O campo senha é requerido.")
     private String password;

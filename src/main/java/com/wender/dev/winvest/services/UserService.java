@@ -17,6 +17,9 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private SecurityService securityService;
+
     public User findById(Long id) {
         Optional<User> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found! id: " + id));
@@ -40,11 +43,7 @@ public class UserService {
         }
 
         return repository.save(
-                new User(objDTO.getName(),
-                        objDTO.getEmail(),
-                        objDTO.getPhone(),
-                        objDTO.getCpf(),
-                        objDTO.getPassword())
+                new User(objDTO.getName(), objDTO.getEmail(), objDTO.getPhone(), objDTO.getCpf(), securityService.encoder().encode(objDTO.getPassword()))
         );
     }
 
@@ -67,7 +66,7 @@ public class UserService {
         oldObj.setEmail(objDTO.getEmail());
         oldObj.setCpf(objDTO.getCpf());
         oldObj.setPhone(objDTO.getPhone());
-        oldObj.setPassword(objDTO.getPassword());
+        oldObj.setPassword(securityService.encoder().encode(objDTO.getPassword()));
         return repository.save(oldObj);
 
     }

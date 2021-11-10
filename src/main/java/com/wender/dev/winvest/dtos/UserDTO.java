@@ -1,5 +1,6 @@
 package com.wender.dev.winvest.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.wender.dev.winvest.entities.User;
 import com.wender.dev.winvest.entities.Wallet;
 import lombok.EqualsAndHashCode;
@@ -30,10 +31,12 @@ public class UserDTO implements Serializable {
     @NotNull(message = "O campo telefone é requerido.")
     private String phone;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull(message = "O campo cpf é requerido.")
     @Column(unique = true)
     private String cpf;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull(message = "O campo senha é requerido.")
     private String password;
 
