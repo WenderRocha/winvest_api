@@ -79,6 +79,13 @@ public class Management implements Serializable {
                 .setScale(2, RoundingMode.HALF_EVEN);
     }
 
+    public BigDecimal getStopLoss() {
+        BigDecimal percentual = this.stop.divide(new BigDecimal("100"));
+        return percentual
+                .multiply(getBalance())
+                .setScale(2, RoundingMode.HALF_EVEN);
+    }
+
     public BigDecimal getProfitPercentage() {
         return getBalance()
                 .divide(wallet.getBalance(), 3, RoundingMode.HALF_EVEN)

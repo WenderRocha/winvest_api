@@ -36,6 +36,8 @@ public class JWTConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JWTAuthenticateFilter(authenticationManager()))
@@ -50,7 +52,6 @@ public class JWTConfiguration extends WebSecurityConfigurerAdapter {
 
        CorsConfiguration corsConfiguration = new CorsConfiguration().applyPermitDefaultValues();
        source.registerCorsConfiguration("/**", corsConfiguration);
-
        return source;
     }
 }
