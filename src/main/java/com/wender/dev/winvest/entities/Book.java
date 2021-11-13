@@ -30,18 +30,19 @@ public class Book implements Serializable {
     private BigDecimal win;
     private BigDecimal loss;
     private BigDecimal profit;
-
+    private BigDecimal balance;
     @JsonIgnore
     @OneToOne
     @JoinColumn(name = "management_id")
     private Management management;
 
-    public Book(Long id, BigDecimal win, BigDecimal loss, BigDecimal profit, Management management) {
+    public Book(Long id, BigDecimal win, BigDecimal loss, BigDecimal profit, BigDecimal balance, Management management) {
         this.id = id;
         this.date = LocalDate.now();
         this.win = management.getWinToday();
         this.loss = management.getLossToday();
         this.profit = management.getProfitToday();
+        this.balance = management.getBalance();
         this.management = management;
     }
 }

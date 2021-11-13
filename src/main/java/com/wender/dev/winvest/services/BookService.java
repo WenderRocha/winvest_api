@@ -33,6 +33,7 @@ public class BookService {
         book.setWin(management.getWinToday());
         book.setLoss(management.getLossToday());
         book.setProfit(management.getProfitToday());
+        book.setBalance(management.getBalance());
         book.setManagement(management);
 
         return repository.save(book);
@@ -44,6 +45,7 @@ public class BookService {
         oldObj.setWin(management.getWinToday());
         oldObj.setLoss(management.getLossToday());
         oldObj.setProfit(management.getProfitToday());
+        oldObj.setBalance((management.getBalance()));
 
         return repository.save(oldObj);
     }
